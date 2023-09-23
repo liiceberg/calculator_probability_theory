@@ -29,17 +29,13 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
                     R.id.placements_with_rep_btn -> {
                         if (getN() > 0 && getK() > 0) {
                             calculatePlacementsWithRep(n, k)
-                        } else {
-                            null
-                        }
+                        } else 0
                     }
 
                     R.id.placements_no_rep_btn -> {
                         if (getN() > 0 && getK() > 0) {
                             calculatePlacementsNoRep(n, k)
-                        } else {
-                            null
-                        }
+                        } else 0
                     }
 
                     R.id.permutations_with_rep_btn -> {
@@ -47,55 +43,43 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
                             calculatePermutationsWithRep(
                                 valueNEt.text.toString().split(" ").map(String::toInt)
                             )
-                        } else {
-                            null
-                        }
+                        } else 0
 
                     }
 
                     R.id.permutations_no_rep_btn -> {
                         if (getN() > 0) {
                             calculatePermutationsNoRep(n)
-                        } else {
-                            null
-                        }
+                        } else 0
                     }
 
                     R.id.combinations_with_rep_btn -> {
                         if (getN() > 0 && getK() > 0) {
                             calculateCombinationsWithRep(n, k)
-                        } else {
-                            null
-                        }
+                        } else 0
                     }
 
                     R.id.placements_no_rep_btn -> {
                         if (getN() > 0 && getK() > 0) {
                             calculateCombinationsNoRep(n, k)
-                        } else {
-                            null
-                        }
+                        } else 0
+
                     }
 
                     R.id.task1_btn -> {
                         if (getN() > 0 && getK() > 0 && getM() > 0) {
                             calculateProbability1(k, n, m)
-                        } else {
-                            null
-                        }
+                        } else 0
                     }
 
                     R.id.task2_btn -> {
                         if (getN() > 0 && getM() > 0 && getR() > 0) {
                             calculateProbability2(k, n, m, r)
-                        } else {
-                            null
-                        }
+                        } else 0
                     }
-
-                    else -> null
+                    else -> 0
                 }
-                if (value != null) {
+                if (value != 0) {
                     var text = getString(R.string.answer) + "\n"
                     if (value is Double) {
                         text += String.format("%.3f", value)
@@ -153,8 +137,8 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
         return factorial(n)
     }
 
-    private fun calculatePermutationsWithRep(list: List<Int>): Double {
-        var answer = factorial(list.sum()) * 1.0
+    private fun calculatePermutationsWithRep(list: List<Int>): Long {
+        var answer = factorial(list.sum())
         for (elem in list) {
             answer /= factorial(elem)
         }
@@ -169,21 +153,21 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
         return answer
     }
 
-    private fun calculateCombinationsWithRep(n: Int, k: Int): Double {
+    private fun calculateCombinationsWithRep(n: Int, k: Int): Long {
         return calculateCombinationsNoRep(n + k - 1, k)
     }
 
-    private fun calculateCombinationsNoRep(n: Int, k: Int): Double {
-        return (calculatePlacementsNoRep(n, k) * 1.0) / (factorial(k) * 1.0)
+    private fun calculateCombinationsNoRep(n: Int, k: Int): Long {
+        return calculatePlacementsNoRep(n, k) / factorial(k)
     }
 
     private fun calculateProbability1(n: Int, k: Int, m: Int): Double {
-        return calculateCombinationsNoRep(m, k) / calculateCombinationsNoRep(n, k)
+        return calculateCombinationsNoRep(m, k) * 1.0 / calculateCombinationsNoRep(n, k)
     }
 
     private fun calculateProbability2(n: Int, k: Int, m: Int, r: Int): Double {
         return calculateCombinationsNoRep(m, r) *
-                calculateCombinationsNoRep(n - m, k - r) / calculateCombinationsNoRep(n, k)
+                calculateCombinationsNoRep(n - m, k - r) * 1.0 / calculateCombinationsNoRep(n, k)
     }
 
     private fun factorial(n: Int): Long {
@@ -207,7 +191,7 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
     private fun getK(): Int {
         binding?.run {
             if (!valueKEt.text.isNullOrEmpty()) {
-                k = valueNEt.text.toString().toInt()
+                k = valueKEt.text.toString().toInt()
                 return k
             }
         }
@@ -217,7 +201,7 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
     private fun getM(): Int {
         binding?.run {
             if (!valueMEt.text.isNullOrEmpty()) {
-                m = valueNEt.text.toString().toInt()
+                m = valueMEt.text.toString().toInt()
                 return m
             }
         }
@@ -227,7 +211,7 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
     private fun getR(): Int {
         binding?.run {
             if (!valueREt.text.isNullOrEmpty()) {
-                r = valueNEt.text.toString().toInt()
+                r = valueREt.text.toString().toInt()
                 return r
             }
         }

@@ -29,13 +29,13 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
             applyBtn.setOnClickListener {
                 val value = when (idButton) {
                     R.id.placements_with_rep_btn -> {
-                        if (getN() > 0 && getK() > 0) {
+                        if (getN() > 0 && getK() > 0 && k <= n) {
                             calculatePlacementsWithRep(n, k)
                         } else 0
                     }
 
                     R.id.placements_no_rep_btn -> {
-                        if (getN() > 0 && getK() > 0) {
+                        if (getN() > 0 && getK() > 0 && k <= n) {
                             calculatePlacementsNoRep(n, k)
                         } else 0
                     }
@@ -56,26 +56,27 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
                     }
 
                     R.id.combinations_with_rep_btn -> {
-                        if (getN() > 0 && getK() > 0) {
+                        if (getN() > 0 && getK() > 0 && k <= n) {
                             calculateCombinationsWithRep(n, k)
                         } else 0
                     }
 
-                    R.id.placements_no_rep_btn -> {
-                        if (getN() > 0 && getK() > 0) {
+                    R.id.combinations_no_rep_btn -> {
+                        if (getN() > 0 && getK() > 0 && k <= n) {
                             calculateCombinationsNoRep(n, k)
                         } else 0
 
                     }
 
                     R.id.task1_btn -> {
-                        if (getN() > 0 && getK() > 0 && getM() > 0) {
+                        if (getN() > 0 && getK() > 0 && getM() > 0 && k < m && m <= n) {
                             calculateProbability1(k, n, m)
                         } else 0
                     }
 
                     R.id.task2_btn -> {
-                        if (getN() > 0 && getM() > 0 && getR() > 0) {
+                        if (getN() > 0 && getK() > 0 && getM() > 0 && getR() > 0
+                                                                && k < m && m <= n && r <= k) {
                             calculateProbability2(k, n, m, r)
                         } else 0
                     }

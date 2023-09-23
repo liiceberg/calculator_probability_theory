@@ -3,6 +3,7 @@ package ru.kpfu.itis.gimaletdinova.alculatorprobabilitytheory
 import android.os.Bundle
 import android.text.method.DigitsKeyListener
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import ru.kpfu.itis.gimaletdinova.alculatorprobabilitytheory.databinding.FragmentCalculatorBinding
@@ -23,6 +24,7 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
             val idButton = arguments?.getInt(BUTTON_ARG)
 
             selectView(idButton)
+            selectImage(idButton)
 
             applyBtn.setOnClickListener {
                 val value = when (idButton) {
@@ -93,6 +95,30 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
 
 
             }
+        }
+    }
+
+    private fun selectImage(id: Int?) {
+        binding?.run {
+            val img = when (id) {
+                R.id.placements_no_rep_btn -> R.drawable.pl_no_r
+                R.id.placements_with_rep_btn -> R.drawable.pl_w_r
+                R.id.permutations_with_rep_btn -> R.drawable.perm_w_r
+                R.id.permutations_no_rep_btn -> R.drawable.perm_no_r
+                R.id.combinations_no_rep_btn -> R.drawable.com_no_r
+                R.id.combinations_with_rep_btn -> R.drawable.comb_w_r
+                R.id.task1_btn -> R.drawable.task_1
+                R.id.task2_btn -> R.drawable.task_2
+                else -> 0
+            }
+
+            formulaIv.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    resources,
+                    img,
+                    null
+                )
+            )
         }
     }
 

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue">
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cambridge_blue"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/title_calculator"
+        android:textColor="@color/blue"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/value_n_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/celeste"
+        android:gravity="center"
+        android:hint="@string/n"
+        android:inputType="number"
+        android:textColorHint="@color/cambridge_blue"
+        app:layout_constraintBottom_toTopOf="@+id/value_k_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/value_k_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/celeste"
+        android:gravity="center"
+        android:hint="@string/k"
+        android:inputType="number"
+        android:textColorHint="@color/cambridge_blue"
+        app:layout_constraintBottom_toTopOf="@+id/value_m_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/value_n_et" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/value_m_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/celeste"
+        android:gravity="center"
+        android:hint="@string/m"
+        android:inputType="number"
+        android:textColorHint="@color/cambridge_blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/value_r_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/value_k_et" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/value_r_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/celeste"
+        android:gravity="center"
+        android:hint="@string/r"
+        android:inputType="number"
+        android:textColorHint="@color/cambridge_blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/apply_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/value_m_et" />
+
+    <Button
+        android:id="@+id/apply_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/celeste"
+        android:text="@string/apply"
+        android:textColor="@color/cambridge_blue"
+        app:layout_constraintBottom_toTopOf="@+id/answer_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/answer_tv"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:textColor="@color/blue"
+        android:background="@color/cambridge_blue"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Calculated answer:" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

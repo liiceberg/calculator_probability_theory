@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Calculator (probability theory)</string>
+    <string name="main_title">Choose the formula you want to calculate</string>
+    <string name="placements">Placements</string>
+    <string name="permutations">Permutations</string>
+    <string name="combinations">Combinations</string>
+    <string name="no_repetitions">No repetitions</string>
+    <string name="with_repetitions">With repetitions</string>
+    <string name="task_condition"><![CDATA[There are N items, among which M are labeled. K items are extracted at random (K < M ). Calculate the probability that]]></string>
+    <string name="task_1_text">All extracted items will be labeled</string>
+    <string name="task_2_text"> R extracted items will be labeled </string>
+    <string name="apply">Apply</string>
+    <string name="title_calculator">Enter your values</string>
+    <string name="answer">Calculated answer:</string>
+    <string name="error_text">Invalid entered data. Please, try again.</string>
+    <string name="perm_with_rep">N1 N2 N3 .. Nk</string>
+    <string name="r">R</string>
+    <string name="m">M</string>
+    <string name="k">K</string>
+    <string name="n">N</string>
+</resources>

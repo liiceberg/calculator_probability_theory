@@ -7,6 +7,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import ru.kpfu.itis.gimaletdinova.alculatorprobabilitytheory.databinding.FragmentCalculatorBinding
+import kotlin.math.sign
 
 class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
 
@@ -70,19 +71,19 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
 
                     R.id.task1_btn -> {
                         if (getN() > 0 && getK() > 0 && getM() > 0 && k < m && m <= n) {
-                            calculateProbability1(k, n, m)
+                            calculateProbability1(n, k, m)
                         } else 0
                     }
 
                     R.id.task2_btn -> {
                         if (getN() > 0 && getK() > 0 && getM() > 0 && getR() > 0
                                                                 && k < m && m <= n && r <= k) {
-                            calculateProbability2(k, n, m, r)
+                            calculateProbability2(n, k, m, r)
                         } else 0
                     }
                     else -> 0
                 }
-                if (value != 0) {
+                if (value is Long || value is Double && sign(value) > 0) {
                     var text = getString(R.string.answer) + "\n"
                     if (value is Double) {
                         text += String.format("%.3f", value)

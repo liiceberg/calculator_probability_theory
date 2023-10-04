@@ -7,15 +7,16 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import ru.kpfu.itis.gimaletdinova.alculatorprobabilitytheory.databinding.FragmentCalculatorBinding
+import java.math.BigInteger
 import kotlin.math.sign
 
 class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
 
     private var binding: FragmentCalculatorBinding? = null
-    private var n = 0
-    private var k = 0
-    private var m = 0
-    private var r = 0
+    private var n = BigInteger.ZERO
+    private var k = BigInteger.ZERO
+    private var m = BigInteger.ZERO
+    private var r = BigInteger.ZERO
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,13 +31,13 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
             applyBtn.setOnClickListener {
                 val value = when (idButton) {
                     R.id.placements_with_rep_btn -> {
-                        if (getN() > 0 && getK() > 0 && k <= n) {
+                        if (getN() > BigInteger.ZERO && getK() > BigInteger.ZERO && k <= n) {
                             calculatePlacementsWithRep(n, k)
                         } else 0
                     }
 
                     R.id.placements_no_rep_btn -> {
-                        if (getN() > 0 && getK() > 0 && k <= n) {
+                        if (getN() > BigInteger.ZERO && getK() > BigInteger.ZERO && k <= n) {
                             calculatePlacementsNoRep(n, k)
                         } else 0
                     }
@@ -44,49 +45,57 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
                     R.id.permutations_with_rep_btn -> {
                         if (!valueNEt.text.isNullOrEmpty()) {
                             calculatePermutationsWithRep(
-                                valueNEt.text.toString().split(" ").map(String::toInt)
+                                valueNEt.text.toString().split(" ").map(String::toBigInteger)
                             )
                         } else 0
 
                     }
 
                     R.id.permutations_no_rep_btn -> {
-                        if (getN() > 0) {
+                        if (getN() > BigInteger.ZERO) {
                             calculatePermutationsNoRep(n)
                         } else 0
                     }
 
                     R.id.combinations_with_rep_btn -> {
-                        if (getN() > 0 && getK() > 0 && k <= n) {
+                        if (getN() > BigInteger.ZERO &&
+                            getK() > BigInteger.ZERO && k <= n) {
                             calculateCombinationsWithRep(n, k)
                         } else 0
                     }
 
                     R.id.combinations_no_rep_btn -> {
-                        if (getN() > 0 && getK() > 0 && k <= n) {
+                        if (getN() > BigInteger.ZERO &&
+                            getK() > BigInteger.ZERO && k <= n) {
                             calculateCombinationsNoRep(n, k)
                         } else 0
 
                     }
 
                     R.id.task1_btn -> {
-                        if (getN() > 0 && getK() > 0 && getM() > 0 && k < m && m <= n) {
+                        if (getN() > BigInteger.ZERO &&
+                            getK() > BigInteger.ZERO &&
+                            getM() > BigInteger.ZERO &&
+                            k < m && m <= n) {
                             calculateProbability1(n, k, m)
                         } else 0
                     }
 
                     R.id.task2_btn -> {
-                        if (getN() > 0 && getK() > 0 && getM() > 0 && getR() > 0
-                                                                && k < m && m <= n && r <= k) {
+                        if (getN() > BigInteger.ZERO &&
+                            getK() > BigInteger.ZERO &&
+                            getM() > BigInteger.ZERO &&
+                            getR() > BigInteger.ZERO &&
+                            k < m && m <= n && r <= k) {
                             calculateProbability2(n, k, m, r)
                         } else 0
                     }
                     else -> 0
                 }
-                if (value is Long || value is Double && sign(value) > 0) {
+                if (value is BigInteger || value is Double && sign(value) > 0) {
                     var text = getString(R.string.answer) + "\n"
                     if (value is Double) {
-                        text += String.format("%.3f", value)
+                        text += String.format("%.10f", value)
                     } else {
                         text += value
                     }
@@ -153,97 +162,108 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
         }
     }
 
-    private fun calculatePlacementsWithRep(n: Int, k: Int): Long {
-        var answer: Long = 1
-        for (i in 1..k) {
+    private fun calculatePlacementsWithRep(n: BigInteger, k: BigInteger): BigInteger {
+        var answer: BigInteger = BigInteger.ONE
+        var i = BigInteger.ONE
+        while (i <= k) {
             answer *= n
+            i += BigInteger.ONE
         }
         return answer
     }
 
-    private fun calculatePermutationsNoRep(n: Int): Long {
+    private fun calculatePermutationsNoRep(n: BigInteger): BigInteger {
         return factorial(n)
     }
 
-    private fun calculatePermutationsWithRep(list: List<Int>): Long {
-        var answer = factorial(list.sum())
+    private fun calculatePermutationsWithRep(list: List<BigInteger>): BigInteger {
+        var n = BigInteger.ZERO
+        list.forEach { number -> n += number }
+        var answer = factorial(n)
         for (elem in list) {
             answer /= factorial(elem)
         }
         return answer
     }
 
-    private fun calculatePlacementsNoRep(n: Int, k: Int): Long {
-        var answer: Long = 1
-        for (i in n - k + 1..n) {
+    private fun calculatePlacementsNoRep(n: BigInteger, k: BigInteger): BigInteger {
+        var answer: BigInteger = BigInteger.ONE
+
+        var i = n - k + BigInteger.ONE    
+        while(i <= n) {
             answer *= i
+            i += BigInteger.ONE
         }
         return answer
     }
 
-    private fun calculateCombinationsWithRep(n: Int, k: Int): Long {
-        return calculateCombinationsNoRep(n + k - 1, k)
+    private fun calculateCombinationsWithRep(n: BigInteger, k: BigInteger): BigInteger {
+        return calculateCombinationsNoRep(n + k - BigInteger.ONE, k)
     }
 
-    private fun calculateCombinationsNoRep(n: Int, k: Int): Long {
+    private fun calculateCombinationsNoRep(n: BigInteger, k: BigInteger): BigInteger {
         return calculatePlacementsNoRep(n, k) / factorial(k)
     }
 
-    private fun calculateProbability1(n: Int, k: Int, m: Int): Double {
-        return calculateCombinationsNoRep(m, k) * 1.0 / calculateCombinationsNoRep(n, k)
+    private fun calculateProbability1(n: BigInteger, k: BigInteger, m: BigInteger): Double {
+        return calculateCombinationsNoRep(m, k).toDouble() /
+                calculateCombinationsNoRep(n, k).toDouble()
     }
 
-    private fun calculateProbability2(n: Int, k: Int, m: Int, r: Int): Double {
-        return calculateCombinationsNoRep(m, r) *
-                calculateCombinationsNoRep(n - m, k - r) * 1.0 / calculateCombinationsNoRep(n, k)
+    private fun calculateProbability2(n: BigInteger, k: BigInteger, m: BigInteger, r: BigInteger): Double {
+        return calculateCombinationsNoRep(m, r).toDouble() *
+                calculateCombinationsNoRep(n - m, k - r).toDouble() /
+                calculateCombinationsNoRep(n, k).toDouble()
     }
 
-    private fun factorial(n: Int): Long {
-        var answer: Long = 1
-        for (i in 1..n) {
+    private fun factorial(n: BigInteger): BigInteger {
+        var answer: BigInteger = BigInteger.ONE
+        var i = BigInteger.ONE
+        while (i <= n) {
             answer *= i
+            i += BigInteger.ONE
         }
         return answer
     }
 
-    private fun getN(): Int {
+    private fun getN(): BigInteger {
         binding?.run {
             if (!valueNEt.text.isNullOrEmpty()) {
-                n = valueNEt.text.toString().toInt()
+                n = valueNEt.text.toString().toBigInteger()
                 return n
             }
         }
-        return 0
+        return BigInteger.ZERO
     }
 
-    private fun getK(): Int {
+    private fun getK(): BigInteger {
         binding?.run {
             if (!valueKEt.text.isNullOrEmpty()) {
-                k = valueKEt.text.toString().toInt()
+                k = valueKEt.text.toString().toBigInteger()
                 return k
             }
         }
-        return 0
+        return BigInteger.ZERO
     }
 
-    private fun getM(): Int {
+    private fun getM(): BigInteger {
         binding?.run {
             if (!valueMEt.text.isNullOrEmpty()) {
-                m = valueMEt.text.toString().toInt()
+                m = valueMEt.text.toString().toBigInteger()
                 return m
             }
         }
-        return 0
+        return BigInteger.ZERO
     }
 
-    private fun getR(): Int {
+    private fun getR(): BigInteger {
         binding?.run {
             if (!valueREt.text.isNullOrEmpty()) {
-                r = valueREt.text.toString().toInt()
+                r = valueREt.text.toString().toBigInteger()
                 return r
             }
         }
-        return 0
+        return BigInteger.ZERO
     }
 
     override fun onDestroyView() {
